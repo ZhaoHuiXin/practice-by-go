@@ -54,11 +54,14 @@ func (this *Array) Insert(index uint, v int) error{
 	if this.Len() == uint(cap(this.data)){
 		return errors.New("full array")
 	}
-	if index != this.length && this.isIndexOutOfRange(index) {
+	// if only one element location left and it's the last one, the index can
+	// be the arrary.Len(), and when add it, the length of array equal capacity.
+	// so must determines index != this.Len() and whether it's out of range.
+	if index != this.Len() && this.isIndexOutOfRange(index) {
 		return errors.New("index out of range")
 	}
 
-	for i := this.length; i>index; i--{
+	for i := this.Len(); i>index; i--{
 		this.data[i] = this.data[i-1]
 	}
 	this.data[index] = v
